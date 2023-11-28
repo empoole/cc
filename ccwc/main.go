@@ -17,6 +17,8 @@ func main() {
 	var charFlag = flag.Bool("m", false, "returns the character count of the given file")
 	flag.Parse()
 	
+	var noFlags = !(*byteFlag || *lineFlag || *wordFlag || *charFlag)
+
 	filePath := flag.Args()[0]
 
 	file, err := os.Open(filePath)
@@ -26,17 +28,17 @@ func main() {
 
 	bytes, lines, words, chars := count(file)
 
-	if(*byteFlag) {
+	if(*byteFlag || noFlags) {
 		fmt.Print(bytes)
 		fmt.Print(" ")
 	}
 
-	if(*lineFlag) {
+	if(*lineFlag || noFlags) {
 		fmt.Print(lines)
 		fmt.Print(" ")
 	}
 
-	if(*wordFlag) {
+	if(*wordFlag || noFlags) {
 		fmt.Print(words)
 		fmt.Print(" ")
 	}
@@ -45,6 +47,8 @@ func main() {
 		fmt.Print(chars)
 		fmt.Print(" ")
 	}
+
+	fmt.Print(filePath)
 
 }
 
